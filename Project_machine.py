@@ -16,16 +16,16 @@ from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_val_score
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error
-
+from sklearn.linear_model import Decision
 data = pd.read_csv('./data/4.power_transform.csv')
 # 가설 변압기와 수소와의 상관관계
 X1 = data['Hydrogen']
 Y1 = data['Life expectation']
 plt.figure(figsize=(10,6) )
 correlation_coefficient = pearsonr(X1, Y1)
-print(f'상관계수: {correlation_coefficient}')
+print(f'수소 상관계수: {correlation_coefficient}')
 plt.scatter(X1, Y1, color='blue', label='Life expectation', marker='o' ,s=30, alpha=0.5)
-plt.title('d')
+plt.title('with Hydrogen')
 plt.xlabel('ppm')
 plt.ylabel('Years')
 plt.legend()
@@ -36,8 +36,8 @@ Y2 = data['Life expectation']
 plt.figure(figsize=(10,6) )
 plt.scatter(X2, Y2, color='blue', label='Life expectation', marker='o' ,s=30, alpha=0.5)
 correlation_coefficient = pearsonr(X2, Y2)
-print(f'상관계수: {correlation_coefficient}')
-plt.title('d')
+print(f'산소 상관계수: {correlation_coefficient}')
+plt.title('with Oxigen')
 plt.xlabel('ppm')
 plt.ylabel('Years')
 plt.legend()
@@ -48,8 +48,8 @@ Y3 = data['Life expectation']
 plt.figure(figsize=(10,6) )
 plt.scatter(X3, Y3, color='blue', label='Life expectation', marker='o' ,s=30, alpha=0.5)
 correlation_coefficient = pearsonr(X3, Y3)
-print(f'상관계수: {correlation_coefficient}')
-plt.title('d')
+print(f'질소 상관계수: {correlation_coefficient}')
+plt.title('with Nitrogen')
 plt.xlabel('ppm')
 plt.ylabel('Years')
 plt.legend()
@@ -60,8 +60,8 @@ Y4 = data['Life expectation']
 plt.figure(figsize=(10,6) )
 plt.scatter(X4, Y4, color='blue', label='Life expectation', marker='o' ,s=30, alpha=0.5)
 correlation_coefficient = pearsonr(X4, Y4)
-print(f'상관계수: {correlation_coefficient}')
-plt.title('d')
+print(f'메탄 상관계수: {correlation_coefficient}')
+plt.title('with Methane')
 plt.xlabel('ppm')
 plt.ylabel('Years')
 plt.legend()
@@ -72,8 +72,8 @@ Y5 = data['Life expectation']
 plt.figure(figsize=(10,6) )
 plt.scatter(X5, Y5, color='blue', label='Life expectation', marker='o' ,s=30, alpha=0.5)
 correlation_coefficient = pearsonr(X5, Y5)
-print(f'상관계수: {correlation_coefficient}')
-plt.title('d')
+print(f'일산화탄소 상관계수: {correlation_coefficient}')
+plt.title('with CO')
 plt.xlabel('ppm')
 plt.ylabel('Years')
 plt.legend()
@@ -83,9 +83,9 @@ X6 = data['CO2']
 Y6 = data['Life expectation']
 plt.figure(figsize=(10,6) )
 correlation_coefficient = pearsonr(X6, Y6)
-print(f'상관계수: {correlation_coefficient}')
+print(f'이산화탄소 상관계수: {correlation_coefficient}')
 plt.scatter(X6, Y6, color='blue', label='Life expectation', marker='o' ,s=30, alpha=0.5)
-plt.title('d')
+plt.title('with CO2')
 plt.xlabel('ppm')
 plt.ylabel('Years')
 plt.legend()
@@ -95,9 +95,9 @@ X7 = data['Ethylene']
 Y7 = data['Life expectation']
 plt.figure(figsize=(10,6) )
 correlation_coefficient = pearsonr(X7, Y7)
-print(f'상관계수: {correlation_coefficient}')
+print(f'에틸렌 상관계수: {correlation_coefficient}')
 plt.scatter(X7, Y7, color='blue', label='Life expectation', marker='o' ,s=30, alpha=0.5)
-plt.title('d')
+plt.title('with Ethylene')
 plt.xlabel('ppm')
 plt.ylabel('Years')
 plt.legend()
@@ -107,9 +107,9 @@ X8 = data['Ethane']
 Y8 = data['Life expectation']
 plt.figure(figsize=(10,6) )
 correlation_coefficient = pearsonr(X8, Y8)
-print(f'상관계수: {correlation_coefficient}')
+print(f'에탄 상관계수: {correlation_coefficient}')
 plt.scatter(X8, Y8, color='blue', label='Life expectation', marker='o' ,s=30, alpha=0.5)
-plt.title('d')
+plt.title('with Ethane')
 plt.xlabel('ppm')
 plt.ylabel('Years')
 plt.legend()
@@ -119,9 +119,9 @@ X9 = data['Acethylene']
 Y9 = data['Life expectation']
 plt.figure(figsize=(10,6) )
 correlation_coefficient = pearsonr(X9, Y9)
-print(f'상관계수: {correlation_coefficient}')
+print(f'아세틸렌 상관계수: {correlation_coefficient}')
 plt.scatter(X9, Y9, color='blue', label='Life expectation', marker='o' ,s=30, alpha=0.5)
-plt.title('d')
+plt.title('with Acethylene')
 plt.xlabel('ppm')
 plt.ylabel('Years')
 plt.legend()
@@ -131,88 +131,76 @@ X10= data['DBDS']
 Y10 = data['Life expectation']
 plt.figure(figsize=(10,6) )
 correlation_coefficient = pearsonr(X10, Y10)
-print(f'상관계수: {correlation_coefficient}')
+print(f'DBDS 상관계수: {correlation_coefficient}')
 plt.scatter(X9, Y9, color='blue', label='Life expectation', marker='o' ,s=30, alpha=0.5)
-plt.title('d')
+plt.title('with DBDS')
 plt.xlabel('ppm')
 plt.ylabel('Years')
 plt.legend()
 plt.show()
 #가설 변압기와 전력계수와의 상관관계
-X10 = data['Power factor']
-Y10 = data['Life expectation']
+X11 = data['Power factor']
+Y11 = data['Life expectation']
 plt.figure(figsize=(10,6) )
-plt.scatter(X10, Y10, color='blue', label='Life expectation', marker='o' ,s=30, alpha=0.5)
-plt.title('d')
-plt.xlabel('')
+correlation_coefficient = pearsonr(X11, Y11)
+print(f'전력계수 상관계수: {correlation_coefficient}')
+plt.scatter(X11, Y11, color='blue', label='Life expectation', marker='o' ,s=30, alpha=0.5)
+plt.title('with Power factor')
+plt.xlabel('W')
 plt.ylabel('Years')
 plt.legend()
 plt.show()
 #가설 변압기와 계면전압과의 상관관계
-X11 = data['Interfacial V']
-Y11 = data['Life expectation']
+X12 = data['Interfacial V']
+Y12 = data['Life expectation']
 plt.figure(figsize=(10,6))
-correlation_coefficient = pearsonr(X11, Y11)
-print(f'상관계수: {correlation_coefficient}')
-plt.scatter(X11, Y11, color='blue', label='Life expectation', marker='o', s=30, alpha=0.5)
-plt.title('d')
-plt.xlabel('')
+correlation_coefficient = pearsonr(X12, Y12)
+print(f'계면전압 상관계수: {correlation_coefficient}')
+plt.scatter(X12, Y12, color='blue', label='Life expectation', marker='o', s=30, alpha=0.5)
+plt.title('with Interfacial')
+plt.xlabel('kW')
 plt.ylabel('Years')
 plt.legend()
 plt.show()
 #가설 변압기와 절연강도와의 상관관계
-X12 = data['Dielectric rigidity']
-Y12 = data['Life expectation']
+X13 = data['Dielectric rigidity']
+Y13 = data['Life expectation']
 plt.figure(figsize=(10,6))
-correlation_coefficient = pearsonr(X12, Y12)
-print(f'상관계수: {correlation_coefficient}')
-plt.scatter(X12, Y12, color='blue', label='Life expectation', marker='o', s=30, alpha=0.5)
-plt.title('d')
+correlation_coefficient = pearsonr(X13, Y13)
+print(f'절연강도 상관계수: {correlation_coefficient}')
+plt.scatter(X13, Y13, color='blue', label='Life expectation', marker='o', s=30, alpha=0.5)
+plt.title('with Dielectric rigidity')
 plt.xlabel('')
 plt.ylabel('Years')
 plt.legend()
 plt.show()
 #가설 변압기와 수분함량과의 상관관계
-X13 = data['Water content']
-Y13 = data['Life expectation']
+X14 = data['Water content']
+Y14 = data['Life expectation']
 plt.figure(figsize=(10,6))
-correlation_coefficient = pearsonr(X13, Y13)
-print(f'상관계수: {correlation_coefficient}')
-plt.scatter(X13, Y13, color='blue', label='Life expectation', marker='o', s=30, alpha=0.5)
-plt.title('d')
-plt.xlabel('')
+correlation_coefficient = pearsonr(X14, Y14)
+print(f'수분함량 상관계수: {correlation_coefficient}')
+plt.scatter(X14, Y14, color='blue', label='Life expectation', marker='o', s=30, alpha=0.5)
+plt.title('with Water content')
+plt.xlabel('%')
 plt.ylabel('Years')
 plt.legend()
 plt.show()
 #가설 변압기와 변압기 상태와의 상관관계
-X14 = data['Health index']
-Y14 = data['Life expectation']
+X15 = data['Health index']
+Y15 = data['Life expectation']
 plt.figure(figsize=(10,6))
-correlation_coefficient = pearsonr(X14, Y14)
-print(f'상관계수: {correlation_coefficient}')
-plt.scatter(X14, Y14, color='blue', label='Life expectation', marker='o', s=30, alpha=0.5)
-plt.title('d')
+correlation_coefficient = pearsonr(X15, Y15)
+print(f'변압기 상태 상관계수: {correlation_coefficient}')
+plt.scatter(X15, Y15, color='blue', label='Life expectation', marker='o', s=30, alpha=0.5)
+plt.title('with Health index')
 plt.xlabel('')
 plt.ylabel('Years')
 plt.legend()
 plt.show()
 
 
+#러닝
+X = X1, X2, X3
+Y = data['Life expectation']
 
-# array = data.values
-# X = array[:, 0:14]
-# Y = array[:, 14]
-# print(X)
-#
-# X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3)
-# model = LinearRegression()
-# model.fit(X_train, Y_train)
-# model.predict(X_test)
-# y_pred = model.predict(X_test)
-#
-# print(model.coef_, model)
-# plt.scatter(range(len(X_test[:15])), Y_test[:15], color='blue')
-# plt.scatter(range(len(X_test[:15])), y_pred[:15], color='red', marker='x')
-# plt.xlabel("material")
-# plt.ylabel("Life expectation")
-# plt.show()
