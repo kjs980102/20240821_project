@@ -28,8 +28,9 @@ plt.title('Correlation with Life Expectation (Sorted by Correlation)')
 plt.show()
 # 독립 변수(X)와 종속 변수(Y) 설정
 X = data[['Hydrogen', 'Oxigen', 'Nitrogen', 'Methane', 'CO2', 'DBDS', 'Interfacial V', 'Dielectric rigidity',
-          'Water content', 'Health index', 'Life expectation']]
+          'Water content', 'Health index']]
 Y = data['Life expectation']
+# 데이터 분할 (훈련 세트와 테스트 세트)
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
 # K-Fold 교차 검증 설정
 kf = KFold(n_splits=10, shuffle=True, random_state=42)
@@ -52,3 +53,14 @@ r2_rf = r2_score(Y_test, y_pred_rf)
 print(f'Random Forest MAE: {mae_rf:.2f}')
 print(f'Random Forest MSE: {mse_rf:.2f}')
 print(f'Random Forest R^2: {r2_rf:.2f}')
+
+# Density Plot of Actual vs Predicted Life Expectation 시각화
+plt.figure(figsize=(10, 6))
+plt.scatter(Y_test, y_pred_rf, alpha=0.6, edgecolors='w', linewidth=0.5)
+plt.plot([Y_test.min(), Y_test.max()], [Y_test.min(), Y_test.max()], 'k--', lw=2)  # 45도 기준선
+plt.xlabel('Actual Life Expectation')
+plt.ylabel('Predicted Life Expectation')
+plt.title('Actual vs Predicted Life Expectation (Random Forest)')
+plt.grid(True)
+plt.savefig('actual_vs_predicted_life_expectation(rf).png', dpi=300, bbox_inches='tight')
+plt.close()

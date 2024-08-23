@@ -48,11 +48,13 @@ print(f'Gradient Boosting MAE: {mae_gb:.2f}')
 print(f'Gradient Boosting MSE: {mse_gb:.2f}')
 print(f'Gradient Boosting R^2: {r2_gb:.2f}')
 
-# Density Plot of Actual vs Predicted Life Expectation
+# Density Plot of Actual vs Predicted Life Expectation 시각화
 plt.figure(figsize=(10, 6))
-sns.kdeplot(Y_test, label='Actual Life Expectation', shade=True, color='blue')
-sns.kdeplot(y_pred_gb, label='Predicted Life Expectation', shade=True, color='orange')
-plt.xlabel('Life Expectation')
-plt.title('Density Plot of Actual vs Predicted Life Expectation')
-plt.legend()
-plt.show()
+plt.scatter(Y_test, y_pred_gb, alpha=0.6, edgecolors='w', linewidth=0.5)
+plt.plot([Y_test.min(), Y_test.max()], [Y_test.min(), Y_test.max()], 'k--', lw=2)  # 45도 기준선
+plt.xlabel('Actual Life Expectation')
+plt.ylabel('Predicted Life Expectation')
+plt.title('Actual vs Predicted Life Expectation (Gradient Boosting)')
+plt.grid(True)
+plt.savefig('actual_vs_predicted_life_expectation(gb).png', dpi=300, bbox_inches='tight')
+plt.close()
