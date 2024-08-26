@@ -11,21 +11,6 @@ from sklearn.svm import SVR
 # 데이터 로드
 data = pd.read_csv('./data/4.power_transform.csv')
 
-# Life expectation과 다른 변수들 간의 상관계수 행렬 계산
-correlation_with_life_expectation = data[['Hydrogen', 'Oxigen', 'Nitrogen', 'Methane', 'CO', 'CO2', 'Ethylene', 'Ethane', 'Acethylene', 'DBDS', 'Power factor', 'Interfacial V', 'Dielectric rigidity', 'Water content', 'Health index', 'Life expectation']].corr()
-
-# Life expectation과의 상관계수만 포함된 서브셋 생성
-life_expectation_corr = correlation_with_life_expectation[['Life expectation']]
-life_expectation_corr = life_expectation_corr.drop('Life expectation')
-
-# 상관계수의 부호를 포함하여 정렬 (내림차순)
-sorted_corr = life_expectation_corr.sort_values(by='Life expectation', ascending=False)
-
-# 히트맵 그리기
-plt.figure(figsize=(10, 8))
-sns.heatmap(sorted_corr, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5, vmin=-1, vmax=0.5)
-plt.title('Correlation with Life Expectation (Sorted by Correlation)')
-plt.show()
 # 독립 변수(X)와 종속 변수(Y) 설정
 X = data[['Hydrogen', 'Oxigen', 'Nitrogen', 'Methane', 'CO2', 'DBDS', 'Interfacial V', 'Dielectric rigidity',
           'Water content', 'Health index']]
