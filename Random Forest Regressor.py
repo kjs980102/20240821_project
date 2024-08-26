@@ -23,7 +23,7 @@ sorted_corr = life_expectation_corr.sort_values(by='Life expectation', ascending
 
 # 히트맵 그리기
 plt.figure(figsize=(10, 8))
-sns.heatmap(sorted_corr, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5, vmin=-1, vmax=0.5)
+sns.heatmap(sorted_corr, annot=True, cmap='RdYlGn', fmt='.2f', linewidths=0.5, vmin=-1, vmax=0.5)
 plt.title('Correlation with Life Expectation (Sorted by Correlation)')
 plt.show()
 # 독립 변수(X)와 종속 변수(Y) 설정
