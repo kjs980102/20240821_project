@@ -23,8 +23,6 @@ models = {
     "Decision Tree": DecisionTreeRegressor(random_state=42),
     "Random Forest": RandomForestRegressor(n_estimators=100, random_state=42),
     "Gradient Boosting": GradientBoostingRegressor(n_estimators=100, random_state=42),
-    "SVR": SVR(kernel='rbf'),
-    "KNN": KNeighborsRegressor(n_neighbors=5)
 }
 
 for model_name, model in models.items():
