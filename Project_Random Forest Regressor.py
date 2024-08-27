@@ -49,12 +49,10 @@ y_pred_rf = model_rf.predict(X_test)
 mae_rf = mean_absolute_error(Y_test, y_pred_rf)
 mse_rf = mean_squared_error(Y_test, y_pred_rf)
 rmse_rf = np.sqrt(mse_rf)
-r2_rf = r2_score(Y_test, y_pred_rf)
 
 print(f'Random Forest MAE: {mae_rf:.2f}')
 print(f'Random Forest MSE: {mse_rf:.2f}')
 print(f'Random Forest RMSE: {rmse_rf:.2f}')
-print(f'Random Forest R^2: {r2_rf:.2f}')
 
 # Density Plot of Actual vs Predicted Life Expectation 시각화
 plt.figure(figsize=(10, 6))
