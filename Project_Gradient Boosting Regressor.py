@@ -4,7 +4,7 @@ import seaborn as sns
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
-
+import numpy as np
 # 데이터 로드
 data = pd.read_csv('./data/4.power_transform.csv')
 
@@ -42,15 +42,20 @@ y_pred_gb = model_gb.predict(X_test)
 # 성능 평가
 mae_gb = mean_absolute_error(Y_test, y_pred_gb)
 mse_gb = mean_squared_error(Y_test, y_pred_gb)
+rmse_gb = np.sqrt(mse_gb)
 r2_gb = r2_score(Y_test, y_pred_gb)
 
 print(f'Gradient Boosting MAE: {mae_gb:.2f}')
 print(f'Gradient Boosting MSE: {mse_gb:.2f}')
+print(f'Gradient Boosting MSE: {rmse_gb:.2f}')
 print(f'Gradient Boosting R^2: {r2_gb:.2f}')
 
 # Density Plot of Actual vs Predicted Life Expectation 시각화
 plt.figure(figsize=(10, 6))
-plt.scatter(Y_test, y_pred_gb, alpha=0.6, edgecolors='w', linewidth=0.5)
+data = pd.read_csv("./results/y_pred.csv")
+re_ypred = data['Life expectation_pred']
+re_ytest = data['Life expectation_test']
+plt.scatter(re_ytest, re_ypred, alpha=0.6, edgecolors='w', linewidth=0.5)
 plt.plot([Y_test.min(), Y_test.max()], [Y_test.min(), Y_test.max()], 'k--', lw=2)  # 45도 기준선
 plt.xlabel('Actual Life Expectation')
 plt.ylabel('Predicted Life Expectation')

@@ -50,3 +50,4 @@ for model_name, model in models.items():
     print(f'{model_name} MAE: {np.mean(mae_scores):.2f}')
     print(f'{model_name} MSE: {np.mean(mse_scores):.2f}')
     print(f'{model_name} R^2: {np.mean(r2_scores):.2f}\n')
+
